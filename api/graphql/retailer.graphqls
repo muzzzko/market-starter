@@ -1,0 +1,41 @@
+type RetailerEmployee {
+  id: Int!
+  firstName: String!
+  secondName: String!
+  email: String!
+  retailers: [Retailer]!
+}
+
+type Retailer {
+  id: Int!
+  name: String!
+  EmployeeRole: RetailerEmployeeRole!
+}
+
+type RetailerEmployeeRole {
+  id: Int!
+  role: String!
+}
+
+type Query {
+  loginRetailerEmployeeByEmail(email: String!, password: String!): RetailerEmployee
+  retailerEmployee: RetailerEmployee! @isAuthenticated
+}
+
+input NewRetailerEmployee {
+  firstName: String!
+  secondName: String!
+  email: String!
+  password: String!
+}
+
+input NewRetailer {
+  name: String!
+}
+
+type Mutation {
+  createRetailerEmployee(input: NewRetailerEmployee!): RetailerEmployee!
+  createRetailer(input: NewRetailer): Retailer! @isAuthenticated
+}
+
+directive @isAuthenticated on FIELD_DEFINITION
